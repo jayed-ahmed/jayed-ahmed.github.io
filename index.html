@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jayed Ahmed Ador | Academic Portfolio</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #0f172a; 
+            --secondary-color: #1d4ed8; 
+            --accent-bg: #eff6ff;
+            --bg-color: #f8fafc;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            line-height: 1.65;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            color: var(--primary-color);
+        }
+
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            color: #1e40af;
+        }
+
+        /* Top Page Loading Bar */
+        #top-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background-color: var(--secondary-color);
+            z-index: 2000;
+            transition: width 0.25s ease, opacity 0.25s ease;
+            opacity: 0;
+        }
+
+        /* Top Navigation Bar */
+        header {
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            font-family: 'Merriweather', serif;
+            white-space: nowrap;
+            cursor: pointer;
+            text-decoration: none !important;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            font-size: 0.92rem;
+            font-weight: 500;
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item:hover {
+            color: var(--secondary-color);
+            background-color: var(--bg-color);
+        }
+
+        .nav-item.active {
+            color: var(--secondary-color);
+            background-color: var(--accent-bg);
+            font-weight: 600;
+        }
+
+        .cv-button {
+            background-color: var(--primary-color);
+            padding: 7px 14px;
+            border-radius: 6px;
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 0.88rem !important;
+            margin-left: 6px;
+            text-decoration: none !important;
+        }
+
+        .cv-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 980px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 105px 20px 40px;
+            flex: 1;
+        }
+
+        /* Loading Spinner inside Page */
+        #page-spinner {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 0;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+            font-weight: 500;
+            gap: 10px;
+        }
+
+        /* Page Section Switching Styles */
+        .page-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .page-section.active-section {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .page-section h2 {
+            font-size: 1.65rem;
+            margin-bottom: 24px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+        }
+
+        /* 1. Home / Hero Section (Larger Image) */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 42px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+            margin-bottom: 25px;
+        }
+
+        .hero-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-bg);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            background-color: #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .student-badge {
+            display: inline-block;
+            background: var(--accent-bg);
+            color: var(--secondary-color);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.35rem;
+            margin-bottom: 8px;
+            white-space: nowrap;
+        }
+
+        .specialty-line {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .uni-info {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 14px;
+        }
+
+        .hero-contact {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-contact a, .hero-contact button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: var(--bg-color);
+            padding: 7px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .hero-contact a:hover, .hero-contact button:hover {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            background: var(--accent-bg);
+        }
+
+        /* 2. About Section with Image Slot (about-photo.jpg) */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1.45fr 1fr;
+            gap: 32px;
+            align-items: center;
+            background: #ffffff;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .about-image-box {
+            text-align: center;
+        }
+
+        .about-img {
+            width: 100%;
+            max-width: 320px;
+            height: 340px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+            background-color: #e2e8f0;
+        }
+
+        .about-img-caption {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        /* 3. Research Projects */
+        .project {
+            display: flex;
+            gap: 25px;
+            background: #ffffff;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-img {
+            width: 240px;
+            flex-shrink: 0;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 165px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-caption {
+            font-size: 0.76rem;
+            color: var(--text-light);
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        .project-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .project-details {
+            list-style: none;
+        }
+
+        .project-details li {
+            margin-bottom: 8px;
+            font-size: 0.93rem;
+        }
+
+        .project-details strong {
+            color: var(--primary-color);
+        }
+
+        /* 4. Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .skill-column {
+            background: #ffffff;
+            padding: 22px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        }
+
+        .skill-column h3 {
+            font-size: 1.05rem;
+            margin-bottom: 14px;
+            font-family: 'Inter', sans-serif;
+            color: var(--secondary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .skill-column ul {
+            padding-left: 18px;
+            font-size: 0.92rem;
+        }
+
+        .skill-column li {
+            margin-bottom: 8px;
+        }
+
+        /* 5. Academic Info & Coursework */
+        .info-card {
+            background: #ffffff;
+            padding: 26px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 0.94rem;
+            margin-top: 12px;
+        }
+
+        /* 6. Professional Contact Section */
+        .contact-wrapper {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .contact-intro {
+            max-width: 720px;
+            margin-bottom: 26px;
+        }
+
+        .contact-intro h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            text-decoration: none !important;
+            transition: all 0.2s ease;
+        }
+
+        .contact-card:hover {
+            border-color: var(--secondary-color);
+            background: var(--accent-bg);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            flex-shrink: 0;
+        }
+
+        .contact-meta span {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-light);
+            letter-spacing: 0.03em;
+        }
+
+        .contact-meta strong {
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            word-break: break-all;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.88rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border-color);
+            background: #ffffff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 28px 20px;
+            }
+            .hero-img {
+                width: 210px;
+                height: 210px;
+            }
+            .hero-content h1 {
+                font-size: 1.75rem;
+                white-space: nowrap;
+            }
+            .hero-contact {
+                justify-content: center;
+            }
+            .about-layout {
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+            .project {
+                flex-direction: column;
+            }
+            .project-img {
+                width: 100%;
+            }
+            .project-img img {
+                height: auto;
+            }
+            .skills-container,
+            .course-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-container {
+                flex-direction: column;
+                padding: 12px;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .container {
+                padding-top: 145px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Loading Progress Bar -->
+    <div id="top-loader"></div>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="nav-container">
+            <a onclick="loadSection('home')" class="nav-brand">Jayed Ahmed Ador</a>
+            <nav class="nav-links">
+                <button class="nav-item active" data-page="home" onclick="loadSection('home')">Home</button>
+                <button class="nav-item" data-page="about" onclick="loadSection('about')">About</button>
+                <button class="nav-item" data-page="research" onclick="loadSection('research')">Research</button>
+                <button class="nav-item" data-page="skills" onclick="loadSection('skills')">Skills</button>
+                <button class="nav-item" data-page="academic-info" onclick="loadSection('academic-info')">Academic Info</button>
+                <button class="nav-item" data-page="contact" onclick="loadSection('contact')">Contact</button>
+                <a href="Jayed_Ahmed_Ador_Academic_CV.pdf" target="_blank" class="cv-button">Download CV</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Loading Spinner for Page Transitions -->
+        <div id="page-spinner">
+            <i class="fa-solid fa-spinner fa-spin"></i> Loading page...
+        </div>
+        
+        <!-- 1. HOME PAGE -->
+        <section id="section-home" class="page-section active-section">
+            <div class="hero">
+                <img src="profile.jpg" alt="Jayed Ahmed Ador" class="hero-img" onerror="this.src='https://placehold.co/300x300/e2e8f0/475569?text=profile.jpg'">
+                <div class="hero-content">
+                    <span class="student-badge">Undergraduate Student | Biochemistry & Molecular Biology</span>
+                    <h1>Jayed Ahmed Ador</h1>
+                    
+                    <p class="specialty-line">
+                        Exploring Cancer Therapeutics & Drug Repurposing | Translational Oncology | Cell Culture | Molecular Docking | Python
+                    </p>
+                    
+                    <p class="uni-info">
+                        <strong>University of Rajshahi, Bangladesh</strong> &bull; 3rd Year, 2nd Semester &bull; <strong>CGPA: 3.96 / 4.00</strong>
+                    </p>
+                    
+                    <p style="font-size: 0.94rem; color: var(--text-main);">
+                        Dedicated to bridging wet-lab biochemical techniques with computational biology and data analysis to prepare for research internships and graduate studies.
+                    </p>
+                    
+                    <div class="hero-contact">
+                        <button onclick="loadSection('research')" style="background: var(--primary-color); color: #fff; border-color: var(--primary-color);">
+                            <i class="fa-solid fa-flask"></i> View Research
+                        </button>
+                        <a href="mailto:jayedahmed.biochem@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+                        <a href="https://www.linkedin.com/in/jayed-ahmed-ador-4394932a1/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://orcid.org/0009-0007-8286-6711" target="_blank"><i class="fa-brands fa-orcid"></i> ORCID</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT PAGE (With about-photo.jpg) -->
+        <section id="section-about" class="page-section">
+            <h2>About Me</h2>
+            <div class="about-layout">
+                <div class="about-text">
+                    <p style="margin-bottom: 16px;">
+                        I am a third-year undergraduate student in the Department of Biochemistry & Molecular Biology at the University of Rajshahi (maintaining a <strong>CGPA of 3.96 / 4.00</strong>). My academic interests focus on molecular biology, cancer therapeutics, drug repurposing, translational oncology, and bioinformatics[cite: 1].
+                    </p>
+                    <p style="margin-bottom: 16px;">
+                        Alongside my university curriculum, I am actively building hands-on experience in laboratory techniques—including nucleic acid extraction, immunoassays, and cell culture workflows—as well as computational skills in molecular docking, Python-based data analysis, and IBM SPSS[cite: 1].
+                    </p>
+                    <p>
+                        Long-term, I aim to pursue fully funded higher studies (MS/PhD) focused on cancer biology, cellular signaling, and targeted therapeutics[cite: 1].
+                    </p>
+                </div>
+
+                <!-- নতুন ছবির জায়গা: ছবির নাম দেবেন about-photo.jpg -->
+                <div class="about-image-box">
+                    <img src="about-photo.jpg" alt="Jayed Ahmed Ador in Laboratory" class="about-img" onerror="this.src='https://placehold.co/320x340/e2e8f0/475569?text=about-photo.jpg'">
+                    <p class="about-img-caption">Jayed Ahmed Ador &bull; Dept. of Biochemistry & Molecular Biology, RU</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. RESEARCH PAGE -->
+        <section id="section-research" class="page-section">
+            <h2>Research & Laboratory Work</h2>
+            
+            <!-- Project 1 -->
+            <div class="project">
+                <div class="project-img">
+                    <img src="elisa-lab.jpg" alt="Serum TSH ELISA" onerror="this.src='https://placehold.co/400x300/e2e8f0/475569?text=elisa-lab.jpg'">
+                    <div class="project-caption">Microplate assay for human serum TSH measurement.</div>
+                </div>
+                <div class="project-content">
+                    <h3>Measurement of Human Serum TSH Using Sandwich ELISA</h3>
+                    <ul class="project-details">
+                        <li><strong>Objective:</strong> Quantitative determination of Thyroid Stimulating Hormone (TSH) levels in human serum samples to assess thyroid function[cite: 1].</li>
+                        <li><strong>Work Done:</strong> Performed sample dispensing, standard dilution, antibody-enzyme conjugate incubation, washing steps, and optical density reading.</li>
+                        <li><strong>Methods & Tools:</strong> 96-well monoclonal anti-TSH microplate, HRP-conjugated antibody, TMB substrate, spectrophotometry (450 nm).</li>
+                        <li><strong>Result:</strong> Generated a standard calibration curve to accurately evaluate serum TSH concentrations.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project">
+                <div class="project-img">
+                    <img src="dna-extraction.jpg" alt="DNA Extraction" onerror="this.src='https://placehold.co/400x300/e2e8f0/475569?text=dna-extraction.jpg'">
+                    <div class="project-caption">Genomic DNA precipitation and isolation workflow.</div>
+                </div>
+                <div class="project-content">
+                    <h3>Genomic DNA Isolation and Purification</h3>
+                    <ul class="project-details">
+                        <li><strong>Objective:</strong> Extraction of pure genomic DNA from bacterial and plant cells for molecular biology applications[cite: 1].</li>
+                        <li><strong>Work Done:</strong> Conducted cell disruption, lysis buffer treatment, organic contaminant removal, alcohol precipitation, and DNA pellet collection[cite: 1].</li>
+                        <li><strong>Methods & Tools:</strong> SDS/CTAB lysis protocols, centrifugation, chilled ethanol precipitation, and TE buffer storage.</li>
+                        <li><strong>Result:</strong> Successfully isolated intact genomic DNA free from major protein contaminants.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project">
+                <div class="project-img">
+                    <img src="python-eda.jpg" alt="Python Data Analysis" onerror="this.src='https://placehold.co/400x300/e2e8f0/475569?text=python-eda.jpg'">
+                    <div class="project-caption">Data visualization and statistical plots using Python.</div>
+                </div>
+                <div class="project-content">
+                    <h3>YouTube Engagement & Audience Data Analysis</h3>
+                    <ul class="project-details">
+                        <li><strong>Role:</strong> Student Researcher / Data Analyst (Supervised by Rajshahi University Research Society - RURS)[cite: 1].</li>
+                        <li><strong>Objective:</strong> Analyze engagement metrics to identify key factors influencing audience retention[cite: 1].</li>
+                        <li><strong>Work Done:</strong> Cleaned raw datasets, handled missing values, performed Exploratory Data Analysis (EDA), and created visual plots[cite: 1].</li>
+                        <li><strong>Methods & Tools:</strong> Python, Pandas, Matplotlib, Seaborn, and descriptive statistical analysis[cite: 1].</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SKILLS PAGE -->
+        <section id="section-skills" class="page-section">
+            <h2>Skills & Laboratory Training</h2>
+            <div class="skills-container">
+                <div class="skill-column">
+                    <h3>Hands-On Laboratory Skills</h3>
+                    <ul>
+                        <li>Genomic DNA Extraction & Purification</li>
+                        <li>Sandwich ELISA Immunoassay</li>
+                        <li>Cell Disruption & Biochemical Assays</li>
+                        <li>Precision Micropipetting & Buffer Prep</li>
+                        <li>Spectrophotometric Analysis</li>
+                    </ul>
+                </div>
+                <div class="skill-column">
+                    <h3>Research Tools & Training</h3>
+                    <ul>
+                        <li>Mammalian Cell Culture & MTT Assay</li>
+                        <li>Molecular Docking & Drug Design</li>
+                        <li>PCR & Gel Electrophoresis Workflows</li>
+                        <li>In Vitro Cytotoxicity Assessment</li>
+                        <li>Experimental Design</li>
+                    </ul>
+                </div>
+                <div class="skill-column">
+                    <h3>Computational & Software</h3>
+                    <ul>
+                        <li>Python (Pandas, Matplotlib, Seaborn)</li>
+                        <li>IBM SPSS (Statistical Evaluation)</li>
+                        <li>Bioinformatics Databases & Tools</li>
+                        <li>Literature Review & Data Curation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ACADEMIC INFO PAGE -->
+        <section id="section-academic-info" class="page-section">
+            <h2>Academic Info & Coursework</h2>
+            
+            <div class="info-card">
+                <h3 style="font-size: 1.15rem; margin-bottom: 6px;">B.Sc. (Honours) in Biochemistry and Molecular Biology</h3>
+                <p><strong>University of Rajshahi, Bangladesh</strong> | 3rd Year, 2nd Semester[cite: 1]</p>
+                <p style="color: var(--secondary-color); font-weight: 600; margin-top: 4px;">Current CGPA: 3.96 / 4.00</p>
+            </div>
+
+            <div class="info-card">
+                <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Completed & Ongoing Core Courses</h3>
+                <div class="course-grid">
+                    <div>&bull; Molecular Biology & Genetics</div>
+                    <div>&bull; Cell Biology & Cellular Signaling</div>
+                    <div>&bull; Enzymology & Metabolism</div>
+                    <div>&bull; Immunology & Immunochemistry</div>
+                    <div>&bull; Clinical Biochemistry</div>
+                    <div>&bull; Microbiology & Virology</div>
+                    <div>&bull; Biostatistics & Research Methodology</div>
+                    <div>&bull; Bioinformatics & Computational Biology</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. PROFESSIONAL CONTACT PAGE -->
+        <section id="section-contact" class="page-section">
+            <h2>Contact & Academic Profiles</h2>
+            <div class="contact-wrapper">
+                <div class="contact-intro">
+                    <h3>Get in Touch</h3>
+                    <p>
+                        I am open to undergraduate research internships, laboratory training, and academic collaborations[cite: 1]. Feel free to reach out via email or connect with me across my academic and social platforms.
+                    </p>
+                </div>
+
+                <div class="contact-grid">
+                    <!-- Email -->
+                    <a href="mailto:jayedahmed.biochem@gmail.com" class="contact-card">
+                        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="contact-meta">
+                            <span>Official Email</span>
+                            <strong>jayedahmed.biochem@gmail.com</strong>
+                        </div>
+                    </a>
+
+                    <!-- Phone -->
+                    <a href="tel:+8801757716104" class="contact-card">
+                        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div class="contact-meta">
+                            <span>Phone / WhatsApp</span>
+                            <strong>+880 1757-716104</strong>
+                        </div>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/jayed-ahmed-ador-4394932a1/" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+                        <div class="contact-meta">
+                            <span>LinkedIn</span>
+                            <strong>Jayed Ahmed Ador</strong>
+                        </div>
+                    </a>
+
+                    <!-- ORCID -->
+                    <a href="https://orcid.org/0009-0007-8286-6711" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fa-brands fa-orcid"></i></div>
+                        <div class="contact-meta">
+                            <span>ORCID iD</span>
+                            <strong>0009-0007-8286-6711</strong>
+                        </div>
+                    </a>
+
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/share/14ygaTj2aKo/" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fa-brands fa-facebook-f"></i></div>
+                        <div class="contact-meta">
+                            <span>Facebook</span>
+                            <strong>Connect on Facebook</strong>
+                        </div>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/ador_iyi?srtk=aDBmNGtzYmtpbmwx" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fa-brands fa-instagram"></i></div>
+                        <div class="contact-meta">
+                            <span>Instagram</span>
+                            <strong>@ador_iyi</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Jayed Ahmed Ador &bull; Department of Biochemistry & Molecular Biology, University of Rajshahi[cite: 1].</p>
+    </footer>
+
+    <!-- Script for Page Loading Transition -->
+    <script>
+        function loadSection(pageName) {
+            const topLoader = document.getElementById('top-loader');
+            const spinner = document.getElementById('page-spinner');
+            const allSections = document.querySelectorAll('.page-section');
+            const navButtons = document.querySelectorAll('.nav-item');
+
+            // Set active menu button
+            navButtons.forEach(btn => {
+                if (btn.getAttribute('data-page') === pageName) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Start top progress bar & spinner
+            topLoader.style.opacity = '1';
+            topLoader.style.width = '75%';
+            allSections.forEach(sec => sec.classList.remove('active-section'));
+            spinner.style.display = 'flex';
+
+            setTimeout(() => {
+                topLoader.style.width = '100%';
+                spinner.style.display = 'none';
+
+                const targetSection = document.getElementById('section-' + pageName);
+                if (targetSection) {
+                    targetSection.classList.add('active-section');
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                setTimeout(() => {
+                    topLoader.style.opacity = '0';
+                    topLoader.style.width = '0%';
+                }, 200);
+            }, 220);
+        }
+    </script>
+
+</body>
+</html>
